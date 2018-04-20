@@ -3,4 +3,8 @@
 *.pickle
 *.png
 *.jpg
+/UdacityDeepLearning/logs/*
+/UdacityDeepLearning/notMNIST_large/*
+/UdacityDeepLearning/notMNIST_small/*
+*.gz
 
