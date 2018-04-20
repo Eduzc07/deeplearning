@@ -1,0 +1,6 @@
+/data/*
+*.gz
+*.pickle
+*.png
+*.jpg
+
