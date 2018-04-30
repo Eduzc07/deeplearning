@@ -7,4 +7,6 @@
 /Udacity/notMNIST_large/*
 /Udacity/notMNIST_small/*
 *.gz
+/Udacity/.ipynb_checkpoints/*
+
 
