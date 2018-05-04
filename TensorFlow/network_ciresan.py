@@ -65,21 +65,28 @@ def forward_pass(train_batch):
     #image input 3 X 3 X 250		
     
     with tf.name_scope('reshape'):
-        conv_nchw = tf.transpose(h_pool3, [0, 3, 1, 2])
-        h_pool3_flat = tf.reshape(conv_nchw, [-1, 3 * 3 * 250])
+        #conv_nchw = tf.transpose(h_pool3, [0, 3, 1, 2])
+        h_pool3_flat = tf.reshape(h_pool3, [-1, 3 * 3 * 250])
 
+
+    with tf.name_scope('fc1'):
+        W_fc1 = weight_variable([3 * 3 * 250, 500])
+        b_fc1 = bias_variable([500])
+        y_re1 = tf.matmul(h_pool3_flat, W_fc1)
+        fc_sum1 = tf.nn.bias_add(y_re1, b_fc1)
+        fc_output1 = tf.nn.tanh(fc_sum1) 
 
     #fully connected layer
-    with tf.name_scope('fc'):
-        W_fc1 = weight_variable([3 * 3 * 250, 268])
-        b_fc1 = bias_variable([268])
-        y_re = tf.matmul(h_pool3_flat, W_fc1)
-        fc_output = tf.nn.bias_add(y_re, b_fc1)
+    with tf.name_scope('fc2'):
+        W_fc2 = weight_variable([500, 330])
+        b_fc2 = bias_variable([330])
+        y_re2 = tf.matmul(fc_output1, W_fc2)
+        fc_output2 = tf.nn.bias_add(y_re2, b_fc2)
         
     with tf.name_scope('output'):
-        logits = tf.nn.softmax(fc_output)
+        logits = tf.nn.softmax(fc_output2)
 
 
-    return logits, 268
+    return logits, 330
 
 

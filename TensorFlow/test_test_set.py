@@ -1,10 +1,20 @@
 import tensorflow as tf
 
-from data_loading import getDataBatches
-from network_ciresan import forward_pass
-from common import dataPath_Freilassing_48, dataPath_Freilassing1_All
+from data_loading import getDataBatchesWithTFRecords
+from common import getTrainingPath, getImageSize, getTrainingModel
 
-train_batch, label_batch = getDataBatches(dataPath_Freilassing1_All,"test", 1, 64)
+batchSize = int(sys.argv[1])  #128 for alexnet, 64 for ciresan TODO: to generate dynamically
+modelName = str(sys.argv[2])  #actually supported alexnet and ciresan
+dataPath = getTrainingPath(modelName)
+imSize = getImageSize(modelName)
+modelCheckPoint = "Model.ckpt." + str(modelName) + "." +  str(batchSize)
+
+#dynamically import network depending on the input parameter
+module = getTrainingModel(modelName)
+network_import = "from " + module + " import forward_pass"
+exec(network_import)
+
+train_batch, label_batch = getDataBatchesWithTFRecords(dataPath, "test", 1, batchSize, imSize)
 
 output,noClasses = forward_pass(train_batch)
 label_batch_vector = tf.one_hot(label_batch, noClasses)
@@ -13,7 +23,6 @@ print_accuracy = tf.Print(accuracy, [accuracy])
 
 saver = tf.train.Saver()
 init_op = tf.group(tf.global_variables_initializer(), tf.local_variables_initializer())
-
 
 #session preparation
 #variable initialization
@@ -27,13 +36,11 @@ sess = tf.Session()
 sess.run(init_op)
 
 # when I move this befor run(init_op) the resulted accuracy is small
-saver.restore(sess, 'Model.ckpt.64')
+saver.restore(sess, modelCheckPoint)
 
 # Start input enqueue threads.
 coord = tf.train.Coordinator()
 threads = tf.train.start_queue_runners(sess=sess, coord=coord)
-
-
 
 try:
     while not coord.should_stop():
@@ -48,7 +55,5 @@ finally:
 
 # Wait for threads to finish.
 coord.join(threads)
-
-
 sess.close()
 

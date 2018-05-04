@@ -1,18 +1,108 @@
 #converts images in training folder to .png format
 
 import os
+import sys
 from scipy.misc import imread
 from scipy.misc import imsave
 from scipy.misc import imresize
 
-from common import get_immediate_subdirectories
-from common import get_immediate_files
-from common import getClassesIDs
-
-from common import dataPath_Freilassing_48, dataPath_Freilassing_orig, dataPath_All_orig, dataPath_Freilassing1_All
+from common import *
 
 
-logoGrouping = { 1: (183, 250), 7: (174, 1622), 8: (297,), 17: (500,), 18: (923,), 21 : (623,), 24: (40, 104, 292, 690), 9 : (239, 473), 25: (202, 233, 248), 36: (278, 867, 1234), 67: (1501,), 100: (1714,), 101: (1862,), 103 : (367,), 110 : (672,), 122 : (638, 1598), 127: (224,),  218 : (490, 392, 396), 74: (94, 411), 62: (172,), 176: (1152,), 177: (270, 295, 848, 918), 184 : (888, 1464, 1465), 199: (574, 688, 686, 1329),  204: (339,), 207: (208, 375, 376, 546), 234: (308, 1458), 279 : (402,), 305: (436,), 343: (1685,), 360: (640,), 360: (640,),  392: (465,), 418: (419, 593), 445: (446,), 450 : (451, 458, 459, 466, 1731), 454: (455, 456, 457), 460 : (461, 462, 463, 1143, 1182, 1334), 486: (1504,),  512: (1043,), 523: (608,),  558: (1936,),560: (668,), 581: (1593,), 599: (1618,), 606: (609,),658: (666,),  660: (711,), 1693: (1721,), 1788: (1789,) }
+logoGrouping = { 
+    1: (183, 250),
+    7: (174, 1622),
+    8: (297,),
+    9 : (239, 473),
+    17: (500,),
+    19: (484,),
+    18: (923,),
+    21 : (623,),
+    24: (40, 104,292, 690),
+    25: (202, 233, 248),
+    36: (278, 867, 1234),
+    59: (476,),
+    62: (172,),
+    67: (1501,),
+    73: (586,),
+    74: (94, 411),
+    78: (1805,),
+    88: (1001,),
+    98: (526,),
+    99 : (478,),
+    100: (1714,),
+    101: (1862,),
+    103 : (367,),
+    110 : (672,),
+    122 : (638, 1598),
+    127: (224,),
+    201 : (393,),
+    176: (1152,),
+    177: (270, 295, 848, 918),
+    184 : (888, 1464, 1465),
+    199: (574, 688, 686, 1329),
+    204: (339,),
+    207: (208, 375, 376, 546),
+    210: (211,),
+    218 : (490, 392, 396),
+    226: (1413,),
+    234: (308, 1458),
+    279 : (402,),
+    305: (436, 1199),
+    343: (1685,),
+    360: (640,),
+    392: (465,),
+    418: (419, 593),
+    445: (446,),
+    450 : (451, 458, 459, 466, 1731),
+    454: (455, 456, 457),
+    460 : (461, 462, 463, 1143, 1182, 1334),
+    486: (1504,),
+    497: (1928,),
+    512: (1043,),
+    517: (1109,),
+    523: (608,),
+    545: (1193,),
+    551: (770,),
+    558: (1936,),
+    560: (668,),
+    575: (1436,),
+    576: (916,),
+    581: (1593,),
+    599: (1618,),
+    602: (1344, 1345),
+    606: (609,),
+    617: (2001,), 
+    618: (1929,),
+    624: (627, 651),
+    626: (898, 1149, 1311),
+    658: (666,),
+    660: (711,),
+    705: (1045,),
+    722: (1280,),
+    733: (743,),
+    766: (1110,),
+    803: (1976,),
+    870: (871, 883),
+    976: (1357,),
+    1018: (1049,),
+    1068: (1308,),
+    1122: (1150,),
+    1130: (2036,),
+    1141: (1751,),
+    1236: (1244,),
+    1246: (1247,),
+    1327: (2035,),
+    1394: (1395,),
+    1397: (1468,),
+    1444: (1769,),
+    1450: (2000,),
+    1486: (1718,),
+    1532: (2127,),
+    1593: (2066,),
+    1594: (1595,),
+    1693: (1721,),
+    1788: (1789,) }
 
 def getLogoGroupId(logoId, logoGrouping1):
     return logoGrouping1.get(logoId, logoId)
@@ -133,7 +223,38 @@ def prepareImages(rootPath, targetPath, resizeTo, formatIn, formatOut, classEnco
 
     #dictFile.close()
 
-classEnc = createClassEncodings(dataPath_Freilassing_orig, dataPath_All_orig)
-writeClassEncodingsToFile(classEnc, dataPath_Freilassing1_All)
-prepareImages(dataPath_Freilassing_orig, dataPath_Freilassing1_All, 48, "ppm", "png", classEnc)
-prepareImages(dataPath_All_orig, dataPath_Freilassing1_All, 48, "jpg", "png", classEnc)
+
+
+
+classEnc = createClassEncodings(dataPath_Freilassing_orig, dataPath_All_orig, dataPath_apolda_links_orig, dataPath_herrieden_rechts_orig)
+
+modelName = str(sys.argv[1])
+
+if (modelName == "ciresan"):
+    writeClassEncodingsToFile(classEnc, dataPath_Freilassing1_All)
+    prepareImages(dataPath_Freilassing_orig, dataPath_Freilassing1_All, 48, "ppm", "png", classEnc)
+    prepareImages(dataPath_apolda_links_orig, dataPath_Freilassing1_All, 48, "ppm", "png", classEnc)
+    prepareImages(dataPath_All_orig, dataPath_Freilassing1_All, 48, "jpg", "png", classEnc)
+    prepareImages(dataPath_herrieden_rechts_orig, dataPath_Freilassing1_All, 48, "ppm", "png", classEnc)
+
+if (modelName == "alexnet"):
+    writeClassEncodingsToFile(classEnc, dataPath_All_227)
+    prepareImages(dataPath_Freilassing_orig, dataPath_All_227, 227, "ppm", "png", classEnc)
+    prepareImages(dataPath_apolda_links_orig, dataPath_All_227, 227, "ppm", "png", classEnc)
+    prepareImages(dataPath_All_orig, dataPath_All_227, 227, "jpg", "png", classEnc)
+    prepareImages(dataPath_herrieden_rechts_orig, dataPath_All_227, 227, "ppm", "png", classEnc)
+
+
+if (modelName == "vgg16"):
+    writeClassEncodingsToFile(classEnc, dataPath_All_224)
+    prepareImages(dataPath_Freilassing_orig, dataPath_All_224, 224, "ppm", "png", classEnc)
+    prepareImages(dataPath_apolda_links_orig, dataPath_All_224, 224, "ppm", "png", classEnc)
+    prepareImages(dataPath_All_orig, dataPath_All_224, 224, "jpg", "png", classEnc)
+    prepareImages(dataPath_herrieden_rechts_orig, dataPath_All_224, 224, "ppm", "png", classEnc)
+
+if (modelName == "vgglike"):
+    writeClassEncodingsToFile(classEnc, dataPath_All_96)
+    prepareImages(dataPath_Freilassing_orig, dataPath_All_96, 96, "ppm", "png", classEnc)
+    prepareImages(dataPath_apolda_links_orig, dataPath_All_96, 96, "ppm", "png", classEnc)
+    prepareImages(dataPath_All_orig, dataPath_All_96, 96, "jpg", "png", classEnc)
+    prepareImages(dataPath_herrieden_rechts_orig, dataPath_All_96, 96, "ppm", "png", classEnc)
