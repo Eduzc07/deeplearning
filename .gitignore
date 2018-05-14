@@ -8,5 +8,5 @@
 /Udacity/notMNIST_small/*
 *.zip
 /Udacity/.ipynb_checkpoints/*
-
+*.pyc
 
