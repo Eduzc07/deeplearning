@@ -10,13 +10,12 @@ def plot_decision_boundary(model, X, y):
     y_min, y_max = X[1, :].min() - 1, X[1, :].max() + 1
     h = 0.01
     # Generate a grid of points with distance h between them
-    # 以h=0.01为间隔划分区间[x_min, x_max]为xx，另外yy同理。
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
     # Predict the function value for the whole grid
     Z = model(np.c_[xx.ravel(), yy.ravel()])
     Z = Z.reshape(xx.shape)
     # Plot the contour and training examples
-    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral) #等位线
+    plt.contourf(xx, yy, Z, cmap=plt.cm.Spectral)
     plt.ylabel('x2')
     plt.xlabel('x1')
     plt.scatter(X[0, :], X[1, :], c=y, cmap=plt.cm.Spectral)
@@ -32,7 +31,7 @@ def sigmoid(x):
     Return:
     s -- sigmoid(x)
     """
-    s = 1/(1+np.exp(-x))
+    s = 1.0/(1+np.exp(-x))
     return s
 
 def load_planar_dataset():
