@@ -15,7 +15,7 @@ def sigmoid(Z):
     cache -- returns Z as well, useful during backpropagation
     """
     
-    A = 1/(1+np.exp(-Z))
+    A = 1.0/(1+np.exp(-Z))
     cache = Z
     
     return A, cache
@@ -76,7 +76,7 @@ def sigmoid_backward(dA, cache):
     
     Z = cache
     
-    s = 1/(1+np.exp(-Z))
+    s = 1.0/(1+np.exp(-Z))
     dZ = dA * s * (1-s)
     
     assert (dZ.shape == Z.shape)
@@ -261,7 +261,7 @@ def compute_cost(AL, Y):
     m = Y.shape[1]
 
     # Compute loss from aL and y.
-    cost = (1./m) * (-np.dot(Y,np.log(AL).T) - np.dot(1-Y, np.log(1-AL).T))
+    cost = (1.0/m) * (-np.dot(Y,np.log(AL).T) - np.dot(1-Y, np.log(1-AL).T))
     
     cost = np.squeeze(cost)      # To make sure your cost's shape is what we expect (e.g. this turns [[17]] into 17).
     assert(cost.shape == ())
@@ -284,8 +284,8 @@ def linear_backward(dZ, cache):
     A_prev, W, b = cache
     m = A_prev.shape[1]
 
-    dW = 1./m * np.dot(dZ,A_prev.T)
-    db = 1./m * np.sum(dZ, axis = 1, keepdims = True)
+    dW = 1.0/m * np.dot(dZ,A_prev.T)
+    db = 1.0/m * np.sum(dZ, axis = 1, keepdims = True)
     dA_prev = np.dot(W.T,dZ)
     
     assert (dA_prev.shape == A_prev.shape)
@@ -412,7 +412,7 @@ def predict(X, y, parameters):
     #print results
     #print ("predictions: " + str(p))
     #print ("true labels: " + str(y))
-    print("Accuracy: "  + str(np.sum((p == y)/m)))
+    print("Accuracy: "  + str(np.sum(p == y)/float(m)))
         
     return p
 
