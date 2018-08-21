@@ -61,6 +61,8 @@ git commit -m "Description"
 git push origin {branch_name}
 ```
 
+[GitHub DeepLearning](https://github.com/Kulbear/deep-learning-coursera/blob/master/Improving%20Deep%20Neural%20Networks%20Hyperparameter%20tuning%2C%20Regularization%20and%20Optimization/Gradient%20Checking.ipynb)\
+
 ## Info
 [Create a new branch](https://github.com/Kunena/Kunena-Forum/wiki/Create-a-new-branch-with-git-and-manage-branches)\
 [GIt Branching](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)\
