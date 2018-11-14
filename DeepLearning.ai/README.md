@@ -22,6 +22,8 @@
 
 * **[Course 04 video link](https://www.youtube.com/watch?v=ArPaAX_PhIs&list=PLkDaE6sCZn6Gl29AoE31iwdVwSG-KnDzF)**
 
+* **[DeepLearning summary link](https://github.com/mbadry1/DeepLearning.ai-Summary)**
+
 ## Conclusion
 #### Everyone welcome to create pull request if new resource update or if i miss anything :)
 #### As coursera suggest to not to share solution online. So, request you not to share solution for this notebook.
