@@ -1,0 +1,23 @@
+1. Test of texton histogram
+2. Image annotation:
+       - Where is the crate
+       - Where is the handle
+       - where is the logo
+       - type of crate
+               - crate with more colors
+               - bright crate with small handle
+               - dark crate with big handle
+               - bright crate with big handle domain 
+               - dark crate with big handle domain
+       - how many bottles can be seen and where
+       - crate bounding box
+       - does not have a logo
+       - which crate it is (candidate list)
+       - crate dirty?
+       
+3. Crate bounding box - use Otsu of L component of image 
+      - when a big white segment is found and the lower edge is a horiz line - assume that it is the crate
+      - when smaller white segments are found - assume it is a dark crate and perform histogram equalisation
+      - when a medium value is found - it is a crate with more colors
+      - crates with big handle regions can be falsely recognized as crates with more colors
+      - images with band can also be falsely recognized as crate with more colors
